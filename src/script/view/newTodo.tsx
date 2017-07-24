@@ -11,6 +11,10 @@ export class NewTodo extends React.Component<INewTodoPorps, undefined> {
     super(props);
     this.onKeyDown = this.onKeyDown.bind(this);
   }
+  componentDidMount() {
+    let input = findDOMNode<HTMLInputElement>(this.refs.newTodoInput);
+    input.focus();
+  }
   render () {
     return (
       <div className="new-todo">
@@ -18,7 +22,7 @@ export class NewTodo extends React.Component<INewTodoPorps, undefined> {
           ref="newTodoInput"
           type="text"
           className="new-todo-input"
-          placeholder="Add Todo."
+          placeholder="Add todo here."
           onKeyDown={this.onKeyDown}
         />
       </div>
@@ -28,10 +32,14 @@ export class NewTodo extends React.Component<INewTodoPorps, undefined> {
     let input = findDOMNode<HTMLInputElement>(this.refs.newTodoInput);
     let store = this.props.store;
     let title: string;
-    if (event.keyCode === 13) {
+    if (event.keyCode === 13) { // Enter
       title = input.value.trim();
       input.value = '';
-      store.addTodo(title);
+      if (title) {
+        store.addTodo(title);
+      }
+    } else if (event.keyCode === 27) { // ESC
+      input.value = '';
     }
   }
 }

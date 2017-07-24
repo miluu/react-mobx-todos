@@ -3,6 +3,7 @@ import {observer} from 'mobx-react';
 import * as model from '../model';
 import {Todo} from './todo';
 import {NewTodo} from './newTodo';
+import {TodosFooter} from './todosFooter';
 
 interface ITodosProp {
   store: model.Todos;
@@ -19,9 +20,10 @@ export class Todos extends React.Component<ITodosProp, undefined> {
           <NewTodo store={store} />
           <div className="list">
             {
-              store.list.map(todo => <Todo key={todo.id} todo={todo} store={store} />)
+              store.shownList.map(todo => <Todo key={todo.id} todo={todo} store={store} />)
             }
           </div>
+          <TodosFooter store={store} />
         </div>
       </div>
     );

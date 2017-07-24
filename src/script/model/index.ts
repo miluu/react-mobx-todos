@@ -1,6 +1,7 @@
 import * as mobx from 'mobx';
 import * as _ from 'lodash';
 import * as uuid from 'uuid/v1';
+import {SHOWN_STATUS} from '../constant';
 
 const {observable, computed, autorun} = mobx;
 
@@ -47,21 +48,46 @@ export class Todos {
   title: string;
   @observable
   private _selected: string;
+  @observable
+  shownStatus: number = SHOWN_STATUS.ALL;
+  @observable
+  editingTodo: Todo = null;
   constructor () {
     this.title = 'Todos';
   }
   addTodo (title: string) {
     let todo = new Todo(title);
-    this._list.push(todo);
+    this._list.unshift(todo);
     return this;
   }
   removeTodo (todo: Todo) {
     _.pull(this._list, todo);
     return this;
   }
-
-  public get list() : Todo[] {
+  @computed get allCount () {
+    return this._list.length;
+  }
+  @computed get activeCount () {
+    return this._list.filter(todo => !todo.isCompleted).length;
+  }
+  @computed get completedCount () {
+    return this.allCount - this.activeCount;
+  }
+  public get list (): Todo[] {
     return this._list;
   }
-
+  public get shownList (): Todo[] {
+    let list: Todo[];
+    switch (this.shownStatus) {
+      case SHOWN_STATUS.ACTIVE:
+        list = this._list.filter(todo => !todo.isCompleted);
+        break;
+      case SHOWN_STATUS.COMPLETED:
+        list = this._list.filter(todo => todo.isCompleted);
+        break;
+      default:
+        list = this._list;
+    }
+    return list;
+  }
 }
