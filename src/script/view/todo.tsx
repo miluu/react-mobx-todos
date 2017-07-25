@@ -1,5 +1,6 @@
 import * as React from 'react';
 import * as model from '../model';
+import {expr} from 'mobx';
 import {observer} from 'mobx-react';
 import {findDOMNode} from 'react-dom';
 
@@ -19,7 +20,7 @@ export class Todo extends React.Component<ITodoProp, undefined> {
   }
   render () {
     const {todo, store} = this.props;
-    const isEditing = store.editingTodo === todo;
+    const isEditing = expr(() => store.editingTodo === todo);
     return (
       <div
         className={`todo-item${this.props.todo.isCompleted ? ' completed' : ''}`}
