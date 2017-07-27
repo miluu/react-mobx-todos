@@ -14,7 +14,6 @@ module.exports = {
     ]
   },
   externals: {
-    lodash: '_',
-    jquery: '$'
+    lodash: '_'
   },
 }
