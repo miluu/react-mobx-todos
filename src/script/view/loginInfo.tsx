@@ -11,7 +11,7 @@ export class LoginInfo extends React.Component<ILoginInfoProp, undefined> {
     return (
       <div className="login-info">
         <span>Welcom, </span>
-        <span>{store.loginName} </span>
+        <span>{store.loginName}. </span>
         <a href="javascript: void (0);" className="login-out-link">Login out</a>
       </div>
     );

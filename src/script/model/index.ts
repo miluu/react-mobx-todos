@@ -56,6 +56,7 @@ export class Todos {
   loginName: string = null;
   constructor () {
     this.title = 'Todos';
+    // this.loginName = 'Jack';
   }
   addTodo (title: string) {
     let todo = new Todo(title);
