@@ -52,6 +52,8 @@ export class Todos {
   shownStatus: number = SHOWN_STATUS.ALL;
   @observable
   editingTodo: Todo = null;
+  @observable
+  loginName: string = null;
   constructor () {
     this.title = 'Todos';
   }

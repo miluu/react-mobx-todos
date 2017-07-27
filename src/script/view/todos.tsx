@@ -4,6 +4,7 @@ import * as model from '../model';
 import {Todo} from './todo';
 import {NewTodo} from './newTodo';
 import {TodosFooter} from './todosFooter';
+import {LoginInfo} from './loginInfo';
 
 interface ITodosProp {
   store: model.Todos;
@@ -16,6 +17,7 @@ export class Todos extends React.Component<ITodosProp, undefined> {
     return (
       <div className="todos">
         <h1 className="todos-title">{store.title}</h1>
+        <LoginInfo store={store} />
         <div className="todos-content">
           <NewTodo store={store} />
           <div className="list">
