@@ -2,6 +2,7 @@ import * as mobx from 'mobx';
 import * as _ from 'lodash';
 import * as uuid from 'uuid/v1';
 import {SHOWN_STATUS} from '../constant';
+import {wilddog} from './loginModel';
 
 const {observable, computed, autorun} = mobx;
 
@@ -56,12 +57,32 @@ export class Todos {
   loginName: string = null;
   constructor () {
     this.title = 'Todos';
-    // this.loginName = 'Jack';
+    wilddog.auth().onAuthStateChanged((user: any) => {
+      if (user) {
+          this.loginName = user.displayName || user.email;
+      } else {
+        this.loginName = null;
+        this._list = [];
+        this.editingTodo = null;
+      }
+    });
   }
   addTodo (title: string) {
     let todo = new Todo(title);
     this._list.unshift(todo);
     return this;
+  }
+  login (email: string, password: string) {
+    wilddog.auth().signInWithEmailAndPassword(email, password)
+      .catch(err => {
+        alert(`Error: ${err.name}` + '\n' + `Message: ${err.message}`);
+      });
+  }
+  logout () {
+    wilddog.auth().signOut()
+      .catch(err => {
+        alert(`Error: ${err.name}` + '\n' + `Message: ${err.message}`);
+      });
   }
   removeTodo (todo: Todo) {
     _.pull(this._list, todo);

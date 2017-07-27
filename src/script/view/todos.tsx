@@ -21,7 +21,7 @@ export class Todos extends React.Component<ITodosProp, undefined> {
         {
           store.loginName
             ? this.renderTodosContent()
-            : <LoginForm />
+            : <LoginForm store={store} />
         }
       </div>
     );
