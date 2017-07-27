@@ -7,7 +7,6 @@ import * as model from './model';
 
 const domNode = document.querySelector('.container');
 const store = new model.Todos();
-store.addTodo('Hello World!');
 
 render(
   <div>

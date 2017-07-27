@@ -12,12 +12,20 @@ export class Todo {
   @observable private _updateAt: Date;
   private _createAt: Date;
   private _id: string;
-  constructor (title: string) {
-    this._id = uuid();
-    this._content = title;
-    this._isCompleted = false;
-    this._createAt = new Date();
-    this._updateAt = new Date();
+  constructor (opts: string|{[key: string]: any}) {
+    if (typeof opts === 'string') {
+      this._id = uuid();
+      this._content = opts;
+      this._isCompleted = false;
+      this._createAt = new Date();
+      this._updateAt = new Date();
+    } else {
+      this._id = opts.id;
+      this._content = opts.content;
+      this._isCompleted = opts.isCompleted;
+      this._createAt = opts.createAt;
+      this._updateAt = opts.updateAt;
+    }
   }
   get content () {
     return this._content;
@@ -39,7 +47,6 @@ export class Todo {
   public get id(): string {
     return this._id;
   }
-
 }
 
 export class Todos {
